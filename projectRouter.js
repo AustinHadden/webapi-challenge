@@ -149,8 +149,10 @@ router.put("/action/:id", (req, res) => {
   });
 
 function validateProjectId(req, res, next) {
-  Project.get(req.body.project_id).then(project => {
-    if (project === null) {
+  const project_id = parseInt(req.body.project_id);
+  Project.get(project_id)
+  .then(project => {
+    if (project !== null) {
       req.project = project;
     } else {
       res.status(400).json({ message: "invalid project id" });
